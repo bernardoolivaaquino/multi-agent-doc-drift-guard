@@ -1,0 +1,45 @@
+--- a/api_and_hardware_specs.yaml
++++ b/api_and_hardware_specs.yaml
+@@ -7,17 +7,17 @@
+ hardware:
+   power:
+-    nominal_voltage_v: 24.0
++    nominal_voltage_v: 28.0
+     voltage_unit: "V DC"
+     max_current_a: 2.5
+     efficiency_factor: 0.92
+   thermal:
+     min_operating_temp_c: -40.0
+-    max_operating_temp_c: 70.0
++    max_operating_temp_c: 85.0
+     temp_unit: "°C"
+   telemetry:
+-    sampling_rate_hz: 500
++    sampling_rate_hz: 1000
+     rate_unit: "Hz"
+     adc_resolution_bits: 16
+   mechanical:
+@@ -26,11 +26,20 @@
+ api:
+   base_url: "https://api.aerosense.internal/v2"
+   endpoints:
+     telemetry_ingest:
+       method: "POST"
+       path: "/v2/telemetry/ingest"
+-      rate_limit_rpm: 120
++      rate_limit_rpm: 300
+       rate_limit_unit: "req/min"
+       query_params:
+         device_id:
+           type: "string"
+           required: true
+           description: "Unique ATU hardware serial identifier"
++        compression_codec:
++          type: "string"
++          required: false
++          default: "zstd"
++          allowed_values:
++            - "none"
++            - "gzip"
++            - "zstd"
++          description: "Payload compression algorithm for high-frequency bursts"

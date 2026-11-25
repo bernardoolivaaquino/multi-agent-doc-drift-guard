@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multi-agent-doc-drift-guard"
+version = "1.0.0"
+description = "LangGraph and Pydantic v2 multi-agent system that detects technical specification drift from unified diffs, rewrites affected bilingual (EN/FR) Markdown/LaTeX manuals, and prevents numeric hallucinations via a deterministic Fact-Checker Critic loop."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [
+  { name = "Bernardo Oliva Aquino" }
+]
+keywords = [
+  "langgraph",
+  "pydantic",
+  "multi-agent",
+  "docs-as-code",
+  "documentation-drift",
+  "hallucination-guard",
+  "latex",
+]
+dependencies = [
+  "langgraph>=1.0",
+  "pydantic>=2.0",
+  "pyyaml>=6.0",
+  "typer>=0.12",
+  "rich>=13.0",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+llm = [
+  "openai>=1.40",
+  "anthropic>=0.34",
+  "google-genai>=1.0",
+]
+
+[project.scripts]
+doc-drift-guard = "src.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "evals*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra -v"
